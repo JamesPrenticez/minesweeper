@@ -4,53 +4,84 @@ document.addEventListener('DOMContentLoaded', startGame)
 var board = {
   "cells": [{row: 0,
              col: 0,
-             isMine: 0,
+             isMine: false,
+             isMarked: false,
              hidden: true,
+             surroundingMines: 0
             },
             {row: 0,
              col: 1,
-             isMine: 0,
+             isMine: false,
+             isMarked: false,
              hidden: true,
+             surroundingMines: 0
             },
             {row: 0,
              col: 2,
-             isMine: 0,
+             isMine: false,
+             isMarked: false,
              hidden: true,
+             surroundingMines: 0
             },
             {row: 1,
              col: 0,
-             isMine: 0,
+             isMine: false,
+             isMarked: false,
              hidden: true,
+             surroundingMines: 0
             },
             {row: 1,
              col: 1,
-             isMine: 0,
+             isMine: false,
+             isMarked: false,
              hidden: true,
+             surroundingMines: 0
             },
             {row: 1,
              col: 2,
-             isMine: 0,
+             isMine: false,
+             isMarked: false,
              hidden: true,
+             surroundingMines: 0
             },
             {row: 2,
              col: 0,
-             isMine: 0,
+             isMine: false,
+             isMarked: false,
              hidden: true,
+             surroundingMines: 0
             },
             {row: 2,
              col: 1,
-             isMine: 0,
+             isMine: false,
+             isMarked: false,
              hidden: true,
+             surroundingMines: 0
             },
             {row: 2,
              col: 2,
-             isMine: 0,
+             isMine: false,
+             isMarked: false,
              hidden: true,
-            },
+             surroundingMines: 0
+            }
            ]
 }
 
 function startGame () {
+//Loop through length of array
+  for (var i = 0; i <= board.cells.length; i++){
+//Store and update counter with countSurroundingMines 
+  var counter = countSurroundingMines();
+  console.log(counter)
+//Update EACH cell with surroundingMines with new value
+var myCell = "1"
+var key = "surroundingMines"
+board["cells"][myCell][key] = counter; 
+}
+console.log(board)
+
+
   // Don't remove this function call: it makes the game work!
   lib.initBoard()
 }
@@ -75,5 +106,6 @@ function checkForWin () {
 // It will return cell objects in an array. You should loop through 
 // them, counting the number of times `cell.isMine` is true.
 function countSurroundingMines (cell) {
+return 3
 }
 
