@@ -1,7 +1,7 @@
 
 document.addEventListener('DOMContentLoaded', startGame)
 
-// Define your `board` object here!
+/* Define your `board` object here!
 var board = {
   "cells": [{row: 0,
              col: 0,
@@ -68,14 +68,64 @@ var board = {
             }
            ]
 }
+*/
+//Sound Function
+function sound() {
+  var themesong = document.getElementById("themesong");
+  themesong.play()
+}
+
+//Stop Audio
+
+
+
+//Declare a board object
+var board = {} 
+
+
+//Loop through board adding row and col also update isMine with randomization
+function createBoard(){
+board.cells = []
+  for (var i = 0; i < 6; i++){
+    board.cells.push({row: 0, col: (i), isMine: (Math.random() < 0.3), isMarked: false, hidden: true})
+  }
+  for (var i = 0; i < 6; i++) {
+  board.cells.push({row: 1, col: (i), isMine: (Math.random() < 0.3), isMarked: false, hidden: true})
+  }
+  for (var i = 0; i < 6; i++) {
+  board.cells.push({row: 2, col: (i), isMine: (Math.random() < 0.3), isMarked: false, hidden: true})
+  }
+  for (var i = 0; i < 6; i++) {
+  board.cells.push({row: 3, col: (i), isMine: (Math.random() < 0.3), isMarked: false, hidden: true})
+  } 
+  for (var i = 0; i < 6; i++) {
+  board.cells.push({row: 4, col: (i), isMine: (Math.random() < 0.3), isMarked: false, hidden: true})
+  } 
+  for (var i = 0; i < 6; i++) {
+  board.cells.push({row: 5, col: (i), isMine: (Math.random() < 0.3), isMarked: false, hidden: true})
+  }    
+}
+
 
 function startGame () {
+  //call create board
+  createBoard()
+
+  //Event Listener for win condition
+  document.addEventListener("mousedown", checkForWin)
+  document.addEventListener("contextmenu", checkForWin)
+
+  //Event Listener for play sound button  
+  document.getElementById("play").addEventListener("click", sound)
+  
+  //Call resetBoard
+  document.getElementById("reset").addEventListener("click", resetBoard); 
+
 //JP - Cycle through "cells" and update value of "surroundingMines"
   for(var i = 0; i < board.cells.length; i++) {
     board.cells[i].surroundingMines = countSurroundingMines(board.cells[i])
     console.log(board.cells[i])
   }
-
   // Don't remove this function call: it makes the game work!
   lib.initBoard()
 }
@@ -85,7 +135,9 @@ function startGame () {
 // 1. Are all of the cells that are NOT mines visible?
 // 2. Are all of the mines marked?
 function checkForWin () {
-
+  if (board.cells.every((cell) => (cell.isMine == false && cell.hidden == false) || (cell.isMine == true && cell.isMarked == true))) {
+    lib.displayMessage('You win!')
+}
   // You can use this function call to declare a winner (once you've
   // detected that they've won, that is!)
   //   lib.displayMessage('You win!')
@@ -112,4 +164,18 @@ function countSurroundingMines (cell) {
 //JP - Dont forget to return the result!
   return countMines
 }
-  console.log(lib.getSurroundingCells(2, 2))
+
+function resetBoard() {
+  document.getElementsByClassName("board")[0].remove();
+  newBoard = document.createElement("div")
+  newBoard.className = 'board'
+  document.getElementsByTagName('body')[0].insertBefore(newBoard, document.getElementById('reset'))
+
+  board = {}
+  
+  createBoard()
+
+  lib.initBoard()
+}
+
+
